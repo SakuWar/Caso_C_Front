@@ -18,7 +18,8 @@ if (!file_exists($carpetaRuta)) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $archivo = $_FILES['archivo'];
 
-    if (move_uploaded_file($archivo['tmp_name'], $carpetaRuta . '/' . $archivo['name'])) {
+    $nombreArchivo = str_replace(' ', '_', $archivo['name']);
+    if (move_uploaded_file($archivo['tmp_name'], $carpetaRuta . '/' . $nombreArchivo)) {
         echo "Archivo subido con éxito.";
     } else {
         echo "Error al subir el archivo.";
