@@ -12,14 +12,24 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_FILES['archivo'])) {
-            $archivo = $_FILES['archivo'];
-
-            $nombreArchivo = str_replace(' ', '_', $archivo['name']);
-            if (move_uploaded_file($archivo['tmp_name'], $carpetaRuta . '/' . $nombreArchivo)) {
-                $subido = true;
-                $mensaje = "Archivo subido con éxito.";
+            $archivos = $_FILES['archivo'];
+            $uploadSuccess = true;
+            
+            foreach ($archivos['name'] as $key => $name) {
+                if ($archivos['error'][$key] === UPLOAD_ERR_OK) {
+                    $nombreArchivo = str_replace(' ', '_', basename($name));
+                    $destino = $carpetaRuta . '/' . $nombreArchivo;
+                    
+                    if (!move_uploaded_file($archivos['tmp_name'][$key], $destino)) {
+                        $uploadSuccess = false;
+                    }
+                }
+            }
+            
+            if ($uploadSuccess) {
+                $mensaje = "Archivos subidos con éxito.";
             } else {
-                throw new Exception("Error al subir el archivo.");
+                throw new Exception("Error al subir algunos archivos.");
             }
         }
     }
@@ -62,7 +72,7 @@ try {
             <div class="drop-area" id="drop-area">
                 <form action="" id="form" method="POST" enctype="multipart/form-data">
                     <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" style="fill:#0730c5;transform: ;msFilter:;"><path d="M13 19v-4h3l-4-5-4 5h3v4z"></path><path d="M7 19h2v-2H7c-1.654 0-3-1.346-3-3 0-1.404 1.199-2.756 2.673-3.015l.581-.102.192-.558C8.149 8.274 9.895 7 12 7c2.757 0 5 2.243 5 5v1h1c1.103 0 2 .897 2 2s-.897 2-2 2h-3v2h3c2.206 0 4-1.794 4-4a4.01 4.01 0 0 0-3.056-3.888C18.507 7.67 15.56 5 12 5 9.244 5 6.85 6.611 5.757 9.15 3.609 9.792 2 11.82 2 14c0 2.757 2.243 5 5 5z"></path></svg> <br>
-                    <input type="file" class="file-input" name="archivo" id="archivo" onchange="document.getElementById('form').submit()">
+                    <input type="file" class="file-input" name="archivo[]" id="archivo" multiple onchange="document.getElementById('form').submit()">
                     <label> Arrastra tus archivos aquí<br>o</label>
                     <p><b>Abre el explorador</b></p> 
                     

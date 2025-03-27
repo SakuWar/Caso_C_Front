@@ -98,31 +98,25 @@ dropArea.addEventListener('dragleave', () => {
 dropArea.addEventListener('drop', (e) => {
     e.preventDefault();
     dropArea.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    handleFile(file);
+    const files = e.dataTransfer.files;
+    handleFiles(files);
 });
 
 // Función para manejar el archivo seleccionado
-function handleFile(file) {
-    if (file) {
-        // Realiza alguna acción, como mostrar el nombre del archivo
-        console.log('Archivo seleccionado:', file.name);
-
-        // También puedes realizar otras acciones, como subir el archivo al servidor
-        // Puedes agregar aquí el código para subir el archivo si lo deseas
-    }
+function handleFiles(files) {
+    const input = document.getElementById('archivo');
+    input.files = files;
+    document.getElementById('form').submit();
 }
 
 // Agrega esta función para manejar el evento de envío del formulario
 Form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const fileInput = Form.querySelector('#archivo');
-    const file = fileInput.files[0];
-    if (file) {
-        // Puedes enviar el archivo al servidor para su procesamiento aquí
-        console.log('Subir archivo:', file.name);
+    const fileInput = document.getElementById('archivo');
+    if (fileInput.files.length > 0) {
+        Form.submit();
     } else {
-        alert('Por favor, seleccione un archivo primero.');
+        alert('Por favor, seleccione al menos un archivo.');
     }
 });
 
