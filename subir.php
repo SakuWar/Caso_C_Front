@@ -1,33 +1,32 @@
 <?php
-// Nombre de la carpeta a crear (obtenido del parámetro)
-$carpetaNombre = $_GET['nombre'];
+header('Content-Type: application/json');
+$response = ['success' => false, 'message' => ''];
 
-// Ruta donde deseas crear la carpeta (por ejemplo, en la carpeta 'descarga')
-$carpetaRuta = "./descarga/" . $carpetaNombre;
+try {
+    $carpetaNombre = $_POST['nombre'];
+    $carpetaRuta = "./descarga/" . $carpetaNombre;
 
-// Verifica si la carpeta ya existe antes de crearla
-if (!file_exists($carpetaRuta)) {
-    // Crea la carpeta con permisos adecuados (por ejemplo, 0755)
-    mkdir($carpetaRuta, 0755, true);
-    $mensaje = "Carpeta '$carpetaNombre' creada con éxito.";
-} else {
-    $mensaje = "La carpeta '$carpetaNombre' ya existe.";
-}
-
-// Luego, cuando se procese un archivo, guárdalo en la carpeta creada
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $archivo = $_FILES['archivo'];
-
-    $nombreArchivo = str_replace(' ', '_', $archivo['name']);
-    if (move_uploaded_file($archivo['tmp_name'], $carpetaRuta . '/' . $nombreArchivo)) {
-        echo "Archivo subido con éxito.";
-    } else {
-        echo "Error al subir el archivo.";
+    if (!file_exists($carpetaRuta)) {
+        mkdir($carpetaRuta, 0755, true);
     }
+
+    if (empty($_FILES['archivo'])) {
+        throw new Exception("No se recibió ningún archivo.");
+    }
+
+    $archivo = $_FILES['archivo'];
+    $nombreArchivo = str_replace(' ', '_', basename($archivo['name']));
+    $destino = $carpetaRuta . '/' . $nombreArchivo;
+
+    if (move_uploaded_file($archivo['tmp_name'], $destino)) {
+        $response['success'] = true;
+        $response['message'] = "Archivo subido correctamente.";
+    } else {
+        throw new Exception("Error al mover el archivo.");
+    }
+} catch (Exception $e) {
+    $response['message'] = $e->getMessage();
 }
+
+echo json_encode($response);
 ?>
-
-
-
-
-

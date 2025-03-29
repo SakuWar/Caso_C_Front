@@ -205,3 +205,40 @@ button.btn_delete svg {
     margin-top: 20px;
   }
 }
+
+/* Barra de progreso */
+.progress-container {
+  width: 100%;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  margin: 8px 0;
+  padding: 10px;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #0730c5;
+  border-radius: 5px;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.file-name {
+  font-size: 14px;
+  color: #020f3c;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.percentage {
+  font-size: 12px;
+  color: #0730c5;
+}

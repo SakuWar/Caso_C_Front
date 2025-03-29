@@ -1,123 +1,150 @@
-
-// Obtén la URL actual
-const urlActual = window.location.href;
-
-// Verifica si el parámetro 'nombre' ya está presente en la URL
-var parametros = new URLSearchParams(window.location.search);
-var carpetaNombre = parametros.get("nombre");
-
-if (!carpetaNombre) {
-    // Si 'nombre' no está presente, genera un número aleatorio
-    carpetaNombre = generarCadenaAleatoria();
-    // Agrega el parámetro 'nombre' a la URL
-    const urlConParametro = urlActual.includes("?") ? `${urlActual}&nombre=${carpetaNombre}` : `${urlActual}?nombre=${carpetaNombre}`;
-    // Redirige a la nueva URL con el parámetro 'nombre'
-    window.location.href = urlConParametro;
-} else {
-    // Extrae el valor del parámetro de la URL
-    const parametros = new URLSearchParams(window.location.search);
-    const carpetaNombre = parametros.get("nombre");
-
-    // Llama a la función para crear la carpeta con el nombre obtenido
-    function crearCarpeta(carpetaNombre) {
-    $.ajax({
-        url: 'crearCarpeta.php', // Ruta del archivo PHP que crea la carpeta
-        type: 'POST', // Puedes usar POST o GET según tus necesidades
-        data: { nombreCarpeta: carpetaNombre }, // Envía el nombre de la carpeta como datos
-        success: function(response) {
-            console.log('Carpeta creada.'); // Mensaje de éxito (puedes personalizarlo)
-        },
-        error: function() {
-            console.log('Error al crear la carpeta.'); // Mensaje de error (puedes personalizarlo)
-        }
-    });
-}
+// parametro.js
+document.addEventListener('DOMContentLoaded', () => {
+    // Obtener parámetro 'nombre' de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    let carpetaNombre = urlParams.get('nombre');
     
-}
-
-// Función para generar un número aleatorio de 3 dígitos
-function generarCadenaAleatoria() {
-    const caracteres = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    let cadenaAleatoria = '';
-    for (let i = 0; i < 3; i++) {
-        const caracterAleatorio = caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-        cadenaAleatoria += caracterAleatorio;
+    // Generar nombre aleatorio si no existe
+    if (!carpetaNombre) {
+        carpetaNombre = generarCadenaAleatoria();
+        const newUrl = window.location.href.includes('?') 
+            ? `${window.location.href}&nombre=${carpetaNombre}` 
+            : `${window.location.href}?nombre=${carpetaNombre}`;
+        window.location.href = newUrl;
     }
-    return cadenaAleatoria;
-}
 
-
-// //BARRA DE PROGRESO 
-// function uploadFile(carpetaRuta, inputId) {
-//   var archivoInput = document.getElementById(inputId);
-//   var archivo = archivoInput.files[0];
-//   var progressBar = document.getElementById('progressBar');
-
-//   var formData = new FormData();
-//   formData.append('archivo', archivo);
-
-//   var xhr = new XMLHttpRequest();
-
-//   xhr.upload.onprogress = function (event) {
-//       if (event.lengthComputable) {
-//           var percentComplete = (event.loaded / event.total) * 100;
-//           progressBar.value = percentComplete;
-//       }
-//   };
-
-//   xhr.onload = function () {
-//       if (xhr.status === 200) {
-//           console.log('Archivo subido con éxito');
-//           // Puedes realizar acciones adicionales después de la carga aquí
-//       } else {
-//           console.error('Error al subir el archivo');
-//       }
-//   };
-
-//   xhr.open('POST', 'upload.php', true);
-//   xhr.send(formData);
-// }
-
-
-//DROP AREA
-
-// Obtén la zona de arrastre y el formulario
-const dropArea = document.getElementById('drop-area');
-const Form = document.getElementById('form');
-
-// Agrega los siguientes eventos a la zona de arrastre
-dropArea.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    dropArea.classList.add('drag-over');
-});
-
-dropArea.addEventListener('dragleave', () => {
-    dropArea.classList.remove('drag-over');
-});
-
-dropArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropArea.classList.remove('drag-over');
-    const files = e.dataTransfer.files;
-    handleFiles(files);
-});
-
-// Función para manejar el archivo seleccionado
-function handleFiles(files) {
-    const input = document.getElementById('archivo');
-    input.files = files;
-    document.getElementById('form').submit();
-}
-
-// Agrega esta función para manejar el evento de envío del formulario
-Form.addEventListener('submit', (e) => {
-    e.preventDefault();
+    // Elementos del DOM
+    const dropArea = document.getElementById('drop-area');
+    const form = document.getElementById('form');
     const fileInput = document.getElementById('archivo');
-    if (fileInput.files.length > 0) {
-        Form.submit();
-    } else {
-        alert('Por favor, seleccione al menos un archivo.');
+
+    // Configurar eventos
+    setupEventListeners();
+
+    function setupEventListeners() {
+        // Drag and Drop
+        dropArea.addEventListener('dragover', handleDragOver);
+        dropArea.addEventListener('dragleave', handleDragLeave);
+        dropArea.addEventListener('drop', handleDrop);
+        
+        // Input de archivo
+        fileInput.addEventListener('change', handleFileInput);
+        
+        // Formulario
+        form.addEventListener('submit', handleFormSubmit);
+    }
+
+    function handleDragOver(e) {
+        e.preventDefault();
+        dropArea.classList.add('drag-over');
+    }
+
+    function handleDragLeave() {
+        dropArea.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        dropArea.classList.remove('drag-over');
+        handleFiles(e.dataTransfer.files);
+    }
+
+    function handleFileInput(e) {
+        handleFiles(e.target.files);
+    }
+
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        if (fileInput.files.length > 0) {
+            handleFiles(fileInput.files);
+        } else {
+            alert('Por favor, selecciona al menos un archivo.');
+        }
+    }
+
+    async function handleFiles(files) {
+        try {
+            await Promise.all([...files].map(uploadFile));
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function uploadFile(file) {
+        return new Promise((resolve, reject) => {
+            const formData = new FormData();
+            formData.append('archivo', file);
+            formData.append('nombre', carpetaNombre);
+
+            const xhr = new XMLHttpRequest();
+            const progressBar = createProgressBar(file.name);
+
+            xhr.upload.onprogress = (e) => {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    updateProgressBar(progressBar, percent);
+                }
+            };
+
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    const response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        completeProgressBar(progressBar, true);
+                        setTimeout(() => window.location.reload(), 1500);
+                        resolve();
+                    } else {
+                        completeProgressBar(progressBar, false);
+                        reject(response.message);
+                    }
+                }
+            };
+
+            xhr.onerror = () => {
+                completeProgressBar(progressBar, false);
+                reject(new Error('Error de conexión'));
+            };
+
+            xhr.open('POST', 'subir.php', true);
+            xhr.send(formData);
+        });
+    }
+
+    function createProgressBar(fileName) {
+        const container = document.createElement('div');
+        container.className = 'progress-container';
+        
+        container.innerHTML = `
+            <div class="progress-info">
+                <span class="file-name">${fileName}</span>
+                <span class="percentage">0%</span>
+            </div>
+            <div class="progress-bar"></div>
+        `;
+        
+        document.getElementById('file-list').prepend(container);
+        return {
+            container,
+            bar: container.querySelector('.progress-bar'),
+            percentage: container.querySelector('.percentage')
+        };
+    }
+
+    function updateProgressBar(progressBar, percent) {
+        progressBar.bar.style.width = `${percent}%`;
+        progressBar.percentage.textContent = `${percent}%`;
+    }
+
+    function completeProgressBar(progressBar, success) {
+        progressBar.bar.style.width = '100%';
+        progressBar.bar.style.backgroundColor = success ? '#23da95' : '#ff2b00';
+        progressBar.percentage.textContent = success ? '¡Listo!' : 'Error';
+    }
+
+    function generarCadenaAleatoria() {
+        const caracteres = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        return Array.from({length: 3}, () => 
+            caracteres.charAt(Math.floor(Math.random() * caracteres.length))
+        ).join('');
     }
 });
-
-//progres bar 
