@@ -52,33 +52,33 @@ try {
     function obtenerIcono($archivo) {
         $extension = strtolower(pathinfo($archivo, PATHINFO_EXTENSION));
         $iconos = [
-            'pdf' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">PDF</text></svg>',
+            'pdf' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">PDF</text></svg>',
             
-            'doc' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">DOC</text></svg>',
+            'doc' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">DOC</text></svg>',
             
-            'xls' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">XLS</text></svg>',
+            'xls' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">XLS</text></svg>',
             
-            'zip' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">ZIP</text></svg>',
+            'zip' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">ZIP</text></svg>',
             
-            'jpg' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">JPG</text></svg>',
+            'jpg' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">JPG</text></svg>',
             
-            'png' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">PNG</text></svg>',
+            'png' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">PNG</text></svg>',
             
-            'mp3' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">MP3</text></svg>',
+            'mp3' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">MP3</text></svg>',
             
-            'mp4' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">MP4</text></svg>',
+            'mp4' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">MP4</text></svg>',
             
-            'exe' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">EXE</text></svg>',
+            'exe' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">EXE</text></svg>',
             
-            'psd' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">PSD</text></svg>',
+            'psd' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">PSD</text></svg>',
             
-            'ai' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">AI</text></svg>',
+            'ai' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">AI</text></svg>',
             
-            'txt' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">TXT</text></svg>'
+            'txt' => '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">TXT</text></svg>'
         ];
         
         // Icono genérico para extensiones no listadas
-        return $iconos[$extension] ?? '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">'.strtoupper($extension).'</text></svg>';
+        return $iconos[$extension] ?? '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">'.strtoupper($extension).'</text></svg>';
     }
 
 } catch (Exception $e) {
@@ -127,11 +127,10 @@ try {
 
                         foreach ($files as $file) {
                             echo "<div class='archivos_subidos'>
-                            <div class='file-info'>
-                                <div class='file-icon'>".obtenerIcono($file)."</div>
-                                <a href='$carpetaRuta/$file' download class='boton-descargar'>$file</a>
-                            </div>
-                            <div>
+                                <div class='file-info'>
+                                    <div class='file-icon'>".obtenerIcono($file)."</div>
+                                        <a href='descargar.php?carpeta=".urlencode($carpetaNombre)."&archivo=".urlencode($file)."' class='boton-descargar'>$file</a>
+                                    </div>
                             <form action='' method='POST' style='display:inline;'>
                                 <input type='hidden' name='eliminarArchivo' value='$file'>
                                 <button type='submit' class='btn_delete'>
@@ -145,7 +144,6 @@ try {
                                     </svg>
                                 </button>
                             </form>
-                        </div>
                         </div>";
                         }
                     } else {

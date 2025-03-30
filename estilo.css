@@ -275,3 +275,12 @@ button.btn_delete svg {
   text-decoration: none;
   max-width: 250px;
 }
+
+.file-icon svg text {
+  stroke-width: 0.3;
+  paint-order: stroke;
+}
+
+.file-icon svg rect {
+  stroke-width: 1; /* Asegura consistencia en el grosor */
+}
