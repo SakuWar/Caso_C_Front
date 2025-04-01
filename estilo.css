@@ -284,3 +284,33 @@ button.btn_delete svg {
 .file-icon svg rect {
   stroke-width: 1; /* Asegura consistencia en el grosor */
 }
+
+.password-form {
+  margin: 15px 0;
+  padding: 10px;
+  background: #f5f7fd;
+  border-radius: 10px;
+}
+
+.password-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.password-form input[type="password"] {
+  padding: 8px;
+  border: 1px solid #0730c5;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.password-form button {
+  background: #0730c5;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}

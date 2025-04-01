@@ -1,5 +1,4 @@
 <?php
-// Habilitar reporte de errores para depuración (quitar en producción)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -20,21 +19,50 @@ if (!$ruta || !file_exists($ruta)) {
     die('Archivo no encontrado');
 }
 
-// Forzar descarga con headers adecuados
+// Verificar contraseña si existe
+$passwordFile = "./descarga/$carpeta/.password";
+if (file_exists($passwordFile)) {
+    // Mostrar formulario si no se envió la contraseña
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['password'])) {
+        echo '
+        <!DOCTYPE html>
+        <html lang="es">
+        <head>
+            <meta charset="UTF-8">
+            <title>Contraseña requerida</title>
+            <link rel="stylesheet" href="estilo.css">
+        </head>
+        <body>
+            <div class="password-prompt">
+                <form method="POST">
+                    <h3>🔒 Carpeta protegida</h3>
+                    <input type="password" name="password" placeholder="Ingresa la contraseña" required>
+                    <input type="hidden" name="carpeta" value="'.htmlspecialchars($carpeta).'">
+                    <input type="hidden" name="archivo" value="'.htmlspecialchars($archivo).'">
+                    <button type="submit">Desbloquear</button>
+                </form>
+            </div>
+        </body>
+        </html>
+        ';
+        exit;
+    }
+    
+    // Validar contraseña
+    $storedHash = file_get_contents($passwordFile);
+    if (!password_verify($_POST['password'], $storedHash)) {
+        http_response_code(401);
+        die('Contraseña incorrecta');
+    }
+}
+
+// Descargar archivo
 header('Content-Description: File Transfer');
 header('Content-Type: application/octet-stream');
 header('Content-Disposition: attachment; filename="' . $archivo . '"');
-header('Content-Transfer-Encoding: binary');
-header('Expires: 0');
-header('Cache-Control: must-revalidate');
-header('Pragma: public');
 header('Content-Length: ' . filesize($ruta));
-
-// Limpiar buffer de salida
 ob_clean();
 flush();
-
-// Leer archivo
 readfile($ruta);
 exit;
 ?>

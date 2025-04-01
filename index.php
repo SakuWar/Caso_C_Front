@@ -81,6 +81,14 @@ try {
         return $iconos[$extension] ?? '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#0730c5" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="8" fill="#0730c5">'.strtoupper($extension).'</text></svg>';
     }
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['set_password'])) {
+        if (!empty($_POST['password'])) {
+            $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            file_put_contents($carpetaRuta . '/.password', $hash);
+            $mensaje = "Contraseña establecida correctamente.";
+        }
+    }
+
 } catch (Exception $e) {
     $mensaje = "Error: " . htmlspecialchars($e->getMessage());
 }
@@ -101,6 +109,26 @@ try {
     <h1>Compartir archivos <sup class="beta">BETA</sup></h1>
     <div class="content">
         <h3>Sube tus archivos y comparte este enlace temporal: <span>ibu.pe/?nombre=<?php echo $carpetaNombre;?></span></h3>
+
+        <?php if (!file_exists($carpetaRuta . '/.password')): ?>
+        <div class="password-form">
+            <form method="POST">
+                <label><input type="checkbox" id="habilitarPassword" onclick="togglePassword()"> Proteger con contraseña</label>
+                <div id="passwordField" style="display:none;">
+                    <input type="password" name="password" placeholder="Ingresa una contraseña" required>
+                    <button type="submit" name="set_password">Aplicar</button>
+                </div>
+            </form>
+        </div>
+        <script>
+            function togglePassword() {
+                const checkbox = document.getElementById('habilitarPassword');
+                const field = document.getElementById('passwordField');
+                field.style.display = checkbox.checked ? 'block' : 'none';
+            }
+        </script>
+        <?php endif; ?>
+
         <div class="container">
             <div class="drop-area" id="drop-area">
                 <form action="" id="form" method="POST" enctype="multipart/form-data">
