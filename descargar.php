@@ -1,4 +1,5 @@
 <?php
+session_start(); // Iniciar sesión
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -22,37 +23,45 @@ if (!$ruta || !file_exists($ruta)) {
 // Verificar contraseña si existe
 $passwordFile = "./descarga/$carpeta/.password";
 if (file_exists($passwordFile)) {
-    // Mostrar formulario si no se envió la contraseña
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['password'])) {
-        echo '
-        <!DOCTYPE html>
-        <html lang="es">
-        <head>
-            <meta charset="UTF-8">
-            <title>Contraseña requerida</title>
-            <link rel="stylesheet" href="estilo.css">
-        </head>
-        <body>
-            <div class="password-prompt">
-                <form method="POST">
-                    <h3>🔒 Carpeta protegida</h3>
-                    <input type="password" name="password" placeholder="Ingresa la contraseña" required>
-                    <input type="hidden" name="carpeta" value="'.htmlspecialchars($carpeta).'">
-                    <input type="hidden" name="archivo" value="'.htmlspecialchars($archivo).'">
-                    <button type="submit">Desbloquear</button>
-                </form>
-            </div>
-        </body>
-        </html>
-        ';
-        exit;
-    }
+    // Verificar si ya está autenticado para esta carpeta
+    $sessionKey = 'auth_' . md5($carpeta);
     
-    // Validar contraseña
-    $storedHash = file_get_contents($passwordFile);
-    if (!password_verify($_POST['password'], $storedHash)) {
-        http_response_code(401);
-        die('Contraseña incorrecta');
+    if (!isset($_SESSION[$sessionKey])) {
+        // Mostrar formulario si no hay POST
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['password'])) {
+            echo '
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <title>Contraseña requerida</title>
+                <link rel="stylesheet" href="estilo.css">
+            </head>
+            <body>
+                <div class="password-prompt">
+                    <form method="POST">
+                        <h3>🔒 Carpeta protegida</h3>
+                        <input type="hidden" name="carpeta" value="'.htmlspecialchars($carpeta).'">
+                        <input type="hidden" name="archivo" value="'.htmlspecialchars($archivo).'">
+                        <input type="password" name="password" placeholder="Ingresa la contraseña" required>
+                        <button type="submit">Desbloquear</button>
+                    </form>
+                </div>
+            </body>
+            </html>
+            ';
+            exit;
+        }
+        
+        // Validar contraseña
+        $storedHash = file_get_contents($passwordFile);
+        if (!password_verify($_POST['password'], $storedHash)) {
+            http_response_code(401);
+            die('Contraseña incorrecta');
+        }
+        
+        // Marcar como autenticado
+        $_SESSION[$sessionKey] = true;
     }
 }
 

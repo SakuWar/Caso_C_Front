@@ -1,4 +1,5 @@
 <?php
+session_start();
 $carpetaNombre = isset($_GET['nombre']) ? $_GET['nombre'] : '';
 $carpetaRuta = "./descarga/" . $carpetaNombre;
 
@@ -148,7 +149,7 @@ try {
                     $targetDir = $carpetaRuta;
 
                     $files = scandir($targetDir);
-                    $files = array_diff($files, array('.', '..'));
+                    $files = array_diff($files, array('.', '..', '.password'));
 
                     if (count($files) > 0) {
                         echo " <h3 style='margin-bottom:10px;'>Archivos Subidos:</h3>";
