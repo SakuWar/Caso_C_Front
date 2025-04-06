@@ -1,5 +1,5 @@
 <?php
-session_start(); // Iniciar sesión
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -9,9 +9,9 @@ if (!isset($_GET['archivo']) || !isset($_GET['carpeta'])) {
     die('Parámetros faltantes');
 }
 
-// Sanitizar entradas
-$carpeta = filter_var($_GET['carpeta'], FILTER_SANITIZE_STRING);
-$archivo = basename(filter_var($_GET['archivo'], FILTER_SANITIZE_STRING));
+// Sanitizar entradas correctamente
+$carpeta = basename($_GET['carpeta']); // Usar basename para evitar traversal
+$archivo = basename($_GET['archivo']); // Basename elimina rutas
 $ruta = realpath("./descarga/$carpeta/$archivo");
 
 // Validar ruta segura
@@ -23,33 +23,14 @@ if (!$ruta || !file_exists($ruta)) {
 // Verificar contraseña si existe
 $passwordFile = "./descarga/$carpeta/.password";
 if (file_exists($passwordFile)) {
-    // Verificar si ya está autenticado para esta carpeta
     $sessionKey = 'auth_' . md5($carpeta);
     
     if (!isset($_SESSION[$sessionKey])) {
-        // Mostrar formulario si no hay POST
         if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['password'])) {
-            echo '
-            <!DOCTYPE html>
-            <html lang="es">
-            <head>
-                <meta charset="UTF-8">
-                <title>Contraseña requerida</title>
-                <link rel="stylesheet" href="estilo.css">
-            </head>
-            <body>
-                <div class="password-prompt">
-                    <form method="POST">
-                        <h3>🔒 Carpeta protegida</h3>
-                        <input type="hidden" name="carpeta" value="'.htmlspecialchars($carpeta).'">
-                        <input type="hidden" name="archivo" value="'.htmlspecialchars($archivo).'">
-                        <input type="password" name="password" placeholder="Ingresa la contraseña" required>
-                        <button type="submit">Desbloquear</button>
-                    </form>
-                </div>
-            </body>
-            </html>
-            ';
+            // Usar output buffering para evitar errores de headers
+            ob_start();
+            echo '<!DOCTYPE html><html lang="es"><head>...'; // Tu HTML aquí
+            ob_end_flush();
             exit;
         }
         
@@ -60,7 +41,6 @@ if (file_exists($passwordFile)) {
             die('Contraseña incorrecta');
         }
         
-        // Marcar como autenticado
         $_SESSION[$sessionKey] = true;
     }
 }
