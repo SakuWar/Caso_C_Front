@@ -1,95 +1,107 @@
+/* Importa la fuente "Inter" desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+/* Estilos globales */
 * {
-  margin: 0;
-  padding: 0;
-  font-family: "Inter", sans-serif;
-  box-sizing: border-box;
+  margin: 0; /* Elimina márgenes predeterminados */
+  padding: 0; /* Elimina rellenos predeterminados */
+  font-family: "Inter", sans-serif; /* Aplica la fuente "Inter" */
+  box-sizing: border-box; /* Incluye bordes y rellenos en el tamaño total */
 }
 
+/* Estilo del cuerpo de la página */
 body {
-  background: #f5f7fd;
-  font-size: 14px;
-  font-weight: 400;
-  color: #020f3c;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 40px;
-  padding: 0 10px;
+  background: #f5f7fd; /* Fondo claro */
+  font-size: 14px; /* Tamaño de fuente base */
+  font-weight: 400; /* Peso de fuente normal */
+  color: #020f3c; /* Color de texto principal */
+  text-align: center; /* Centra el texto */
+  display: flex; /* Usa flexbox para alinear contenido */
+  align-items: center; /* Centra verticalmente */
+  flex-direction: column; /* Coloca los elementos en columna */
+  margin-top: 40px; /* Espaciado superior */
+  padding: 0 10px; /* Relleno lateral */
 }
 
+/* Contenedor principal */
 .content {
-  text-align: center;
-  background-color: rgb(255, 255, 255);
-  padding: 20px 10px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 900px;
+  text-align: center; /* Centra el texto */
+  background-color: rgb(255, 255, 255); /* Fondo blanco */
+  padding: 20px 10px; /* Relleno interno */
+  border-radius: 20px; /* Bordes redondeados */
+  width: 100%; /* Ocupa todo el ancho disponible */
+  max-width: 900px; /* Ancho máximo */
 }
 
+/* Estilo del título principal */
 h1 {
-  font-weight: 600;
-  font-size: 40px;
-  margin: 20px;
+  font-weight: 600; /* Peso de fuente seminegrita */
+  font-size: 40px; /* Tamaño de fuente grande */
+  margin: 20px; /* Espaciado alrededor */
 }
 
+/* Estilo para el enlace temporal */
 h3 span {
-  color: #0730c5;
+  color: #0730c5; /* Color azul */
 }
 
+/* Contenedor para los elementos principales */
 .container {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  height: auto;
-  max-width: 900px;
-  margin-top: 20px;
-  gap: 15px;
-  padding: 0 20px;
-  flex-direction: row;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  display: flex; /* Usa flexbox */
+  flex-wrap: wrap; /* Permite que los elementos se ajusten */
+  height: auto; /* Altura automática */
+  max-width: 900px; /* Ancho máximo */
+  margin-top: 20px; /* Espaciado superior */
+  gap: 15px; /* Espaciado entre elementos */
+  padding: 0 20px; /* Relleno lateral */
+  flex-direction: row; /* Coloca los elementos en fila */
 }
 
+/* Área para arrastrar y soltar archivos */
 .drop-area {
-  width: 100%;
-  text-align: center;
-  flex: 1 1 400px;
-  margin: 10px;
-  border: 2px dashed #0730c5;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  transition: all 0.1s ease-in;
-  min-width: 300px;
+  width: 100%; /* Ocupa todo el ancho disponible */
+  text-align: center; /* Centra el texto */
+  flex: 1 1 400px; /* Tamaño flexible */
+  margin: 10px; /* Espaciado alrededor */
+  border: 2px dashed #0730c5; /* Borde punteado azul */
+  border-radius: 15px; /* Bordes redondeados */
+  display: flex; /* Usa flexbox */
+  justify-content: center; /* Centra horizontalmente */
+  flex-direction: column; /* Coloca los elementos en columna */
+  align-items: center; /* Centra verticalmente */
+  position: relative; /* Posicionamiento relativo */
+  transition: all 0.1s ease-in; /* Transición suave */
+  min-width: 300px; /* Ancho mínimo */
 }
 
+/* Efecto al pasar el mouse sobre el área de arrastre */
 .drop-area:hover {
-  scale: 0.995;
-  opacity: 0.6;
-  filter: brightness(0.5);
+  scale: 0.995; /* Reduce ligeramente el tamaño */
+  opacity: 0.6; /* Reduce la opacidad */
+  filter: brightness(0.5); /* Reduce el brillo */
 }
 
+/* Estilo del formulario dentro del área de arrastre */
 #form {
-  width: 350px;
-  height: 400px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  width: 350px; /* Ancho fijo */
+  height: 400px; /* Altura fija */
+  position: relative; /* Posicionamiento relativo */
+  display: flex; /* Usa flexbox */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  flex-direction: column; /* Coloca los elementos en columna */
 }
 
+/* Input para seleccionar archivos */
 .file-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
+  position: absolute; /* Posicionamiento absoluto */
+  top: 0; /* Posición superior */
+  left: 0; /* Posición izquierda */
+  width: 100%; /* Ocupa todo el ancho */
+  height: 100%; /* Ocupa toda la altura */
+  opacity: 0; /* Oculta el input */
+  cursor: pointer; /* Cambia el cursor a puntero */
   z-index: 1;
 }
 
