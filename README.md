@@ -8,7 +8,11 @@
 Repositorio con la solución frontend para el caso práctico de desarrollo web. Implementación de interfaz responsive y funcionalidades interactivas con integración backend PHP.
 
 ## Screenshots
-![App Screenshot](./screenshot-1.png)
+<h2 align="center">Screenshots</h2>
+
+<p align="center">
+  <img src="./screenshot-1.png" alt="App Screenshot" />
+</p>
 
 ## 📌 Características principales
 
